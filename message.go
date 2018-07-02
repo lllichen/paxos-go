@@ -2,11 +2,15 @@ package paxos
 
 type msgType int
 
-//code
+//msgType
 const (
+	//1
 	Prepare msgType = iota + 1
+	//2
 	Propose
+	//3
 	Promise
+	//4
 	Accept
 )
 
