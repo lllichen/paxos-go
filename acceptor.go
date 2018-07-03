@@ -42,7 +42,7 @@ func (a *acceptor) run() {
 				a.nt.send(promise)
 			}
 		default:
-			log.Panicf("acceptor: %d unexpected message type: %v", a.id, m.typ)
+			log.Panicf("acceptor: %d unexpected message type: %+v", a.id, m.typ)
 		}
 	}
 }
@@ -79,7 +79,7 @@ func (a *acceptor) receivePropose(propose message) bool {
 		return false
 	}
 	if a.promised.number() < propose.number() {
-		log.Printf("accepted: %d receive unexpected proposal %+v", a.id, propose)
+		log.Panicf("accepted: %d receive unexpected proposal %+v", a.id, propose)
 	}
 	log.Printf("accepted: %d [promised: %+v,accepted: %+v] accepted proposal %+v", a.id, a.promised, a.accept, propose)
 	a.accept = propose

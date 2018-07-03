@@ -47,8 +47,16 @@ func (p *proposer) run() {
 		case Promise:
 			p.receivePromise(m)
 		default:
-			log.Panicf("proposer: %d unexpected message type: %v", p.id, m.typ)
+			log.Panicf("proposer: %d unexpected message type: %+v", p.id, m.typ)
 		}
+	}
+	log.Printf("proposer: %d promise %d reached majority %d", p.id, p.n(), p.majority())
+
+	//stage 2: do propose
+	log.Printf("proposer: %d starts to proposer [%d: %s]", p.id, p.n(), p.value)
+	ms := p.propose()
+	for i := range ms {
+		p.nt.send(ms[i])
 	}
 }
 
@@ -57,7 +65,7 @@ func (p *proposer) run() {
 //v, where v is the value of the highest-numbered proposal among the
 // responses, or is any value selected by the proposer of the responders
 // reported no proposal.
-func (p *proposer) proposer() []message {
+func (p *proposer) propose() []message {
 	ms := make([]message, p.majority())
 
 	i := 0
@@ -103,7 +111,7 @@ func (p *proposer) receivePromise(promise message) {
 		//update value to the value with a larger N
 
 		if promise.proposalNumber() > p.valueN {
-			log.Panicf("proposer: %d updated the value [%s] to [%s]", p.id, p.value, promise.proposalValue())
+			log.Printf("proposer: %d updated the value [%s] to [%s]", p.id, p.value, promise.proposalValue())
 			p.valueN = promise.proposalNumber()
 			p.value = promise.proposalValue()
 		}
