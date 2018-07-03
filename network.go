@@ -36,7 +36,7 @@ func (pn *paxosNetwork) send(m message) {
 func (pn *paxosNetwork) empty() bool {
 	var n int
 	for i, q := range pn.recvQueues {
-		log.Printf("nt: %d left %d", i, len(q))
+		log.Printf("network: %d left %d", i, len(q))
 		n += len(q)
 	}
 	return n == 0
@@ -45,7 +45,7 @@ func (pn *paxosNetwork) empty() bool {
 func (pn *paxosNetwork) recvFrom(from int, timeout time.Duration) (message, bool) {
 	select {
 	case m := <-pn.recvQueues[from]:
-		log.Printf("nt: revc %+v", m)
+		log.Printf("network: revc %+v", m)
 		return m, true
 	case <-time.After(timeout):
 		return message{}, false

@@ -109,7 +109,6 @@ func (p *proposer) receivePromise(promise message) {
 		p.acceptors[promise.from] = promise
 
 		//update value to the value with a larger N
-
 		if promise.proposalNumber() > p.valueN {
 			log.Printf("proposer: %d updated the value [%s] to [%s]", p.id, p.value, promise.proposalValue())
 			p.valueN = promise.proposalNumber()
@@ -122,9 +121,11 @@ func (p *proposer) majority() int {
 	return len(p.acceptors)/2 + 1
 }
 
+//
 func (p *proposer) majorityReached() bool {
 	m := 0
 	for _, promise := range p.acceptors {
+		log.Printf("promise number : %+v, p.n: %+v \n", promise.number(), p.n())
 		if promise.number() == p.n() {
 			m++
 		}

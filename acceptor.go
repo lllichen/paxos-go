@@ -59,7 +59,7 @@ func (a *acceptor) receivePrepare(prepare message) (message, bool) {
 		log.Printf("acceptor: %d [promised: %+v] ignore prepare %+v", a.id, a.promised, prepare)
 		return message{}, false
 	}
-	log.Printf("aceptor: %d[promised: %+v] promised %+v", a.id, a.promised, prepare)
+	log.Printf("aceptor: %d [promised: %+v] promised %+v", a.id, a.promised, prepare)
 	a.promised = prepare
 	m := message{
 		typ:  Promise,
