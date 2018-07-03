@@ -16,6 +16,7 @@ func TestPaxosWithSingleProposer(t *testing.T) {
 		as = append(as, newAcceptor(i, pn.agentNetwork(i), 2001))
 	}
 
+	// run acceptor
 	for _, a := range as {
 		go a.run()
 	}
@@ -40,6 +41,7 @@ func TestPaxosWithTwoProposers(t *testing.T) {
 		as = append(as, newAcceptor(i, pn.agentNetwork(i), 2001))
 	}
 
+	// run acceptor
 	for _, a := range as {
 		go a.run()
 	}
