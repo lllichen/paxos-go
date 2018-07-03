@@ -29,7 +29,7 @@ func (pn *paxosNetwork) agentNetwork(id int) *agentNetwork {
 }
 
 func (pn *paxosNetwork) send(m message) {
-	log.Printf("nt: send %+v", m)
+	log.Printf("network: send %+v", m)
 	pn.recvQueues[m.to] <- m
 }
 

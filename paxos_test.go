@@ -6,7 +6,7 @@ import (
 )
 
 func TestPaxosWithSingleProposer(t *testing.T) {
-	//1,2,3 are acceptors
+	//1, 2, 3 are acceptors
 	//1001 is a proposer
 	//2001 is a learner
 	pn := newPaxosNetwork(1, 2, 3, 1001, 2001)

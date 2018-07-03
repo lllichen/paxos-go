@@ -28,6 +28,7 @@ func (a *acceptor) run() {
 		switch m.typ {
 		case Propose:
 			accepted := a.receivePropose(m)
+			//send msg to learners
 			if accepted {
 				for _, l := range a.learners {
 					m := a.accept
