@@ -8,7 +8,7 @@ import (
 func TestPaxosWithSingleProposer(t *testing.T) {
 	//1,2,3 are acceptors
 	//1001 is a proposer
-
+	//2001 is a learner
 	pn := newPaxosNetwork(1, 2, 3, 1001, 2001)
 
 	as := make([]*acceptor, 0)
@@ -51,7 +51,9 @@ func TestPaxosWithTwoProposers(t *testing.T) {
 	go p2.run()
 
 	l := newLearner(2001, pn.agentNetwork(2001), 1, 2, 3)
+
 	value := l.learn()
+
 	if value != "hello world" {
 		t.Errorf("value = %s, want %s", value, "hello world")
 	}
