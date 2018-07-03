@@ -47,6 +47,7 @@ func TestPaxosWithTwoProposers(t *testing.T) {
 	p1 := newProposer(1001, "hello world", pn.agentNetwork(1001), 1, 2, 3)
 	go p1.run()
 
+	time.Sleep(time.Millisecond)
 	p2 := newProposer(1002, "bad day", pn.agentNetwork(1002), 1, 2, 3)
 	go p2.run()
 
