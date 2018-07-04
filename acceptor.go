@@ -9,7 +9,9 @@ type acceptor struct {
 	id       int
 	learners []int
 
-	accept   message
+	//accept message
+	accept message
+	//
 	promised promise
 
 	nt network
