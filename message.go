@@ -4,13 +4,13 @@ type msgType int
 
 //msgType
 const (
-	//1
+	//1 (iota is 1)
 	Prepare msgType = iota + 1
-	//2 propose propose
+	//2 proposer propose
 	Propose
 	//3 acceptor promise for prepare
 	Promise
-	//4 acceptor accept for propose
+	//4 learner accept for propose
 	Accept
 )
 

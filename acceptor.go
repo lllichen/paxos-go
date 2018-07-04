@@ -11,7 +11,8 @@ type acceptor struct {
 
 	//accept message
 	accept message
-	//
+
+	//prepare promise
 	promised promise
 
 	nt network
@@ -57,11 +58,13 @@ func (a *acceptor) run() {
 //(if any) that it has accepted
 
 func (a *acceptor) receivePrepare(prepare message) (message, bool) {
+	//first 0
 	if a.promised.number() >= prepare.number() {
 		log.Printf("acceptor: %d [promised: %+v] ignore prepare %+v", a.id, a.promised, prepare)
 		return message{}, false
 	}
 	log.Printf("aceptor: %d [promised: %+v] promised %+v", a.id, a.promised, prepare)
+	//save prepare
 	a.promised = prepare
 	m := message{
 		typ:  Promise,

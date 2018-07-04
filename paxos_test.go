@@ -11,6 +11,7 @@ func TestPaxosWithSingleProposer(t *testing.T) {
 	pn := newPaxosNetwork(1, 2, 3, 1001, 2001)
 
 	as := make([]*acceptor, 0)
+
 	for i := 1; i <= 3; i++ {
 		as = append(as, newAcceptor(i, pn.agentNetwork(i), 2001))
 	}

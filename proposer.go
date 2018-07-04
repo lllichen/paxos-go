@@ -1,6 +1,7 @@
 package paxos
 
 import (
+	"fmt"
 	"log"
 	"time"
 )
@@ -34,6 +35,7 @@ func (p *proposer) run() {
 		if !ok {
 			ms := p.prepare()
 			for i := range ms {
+				log.Printf("proposer: %d send proposer %+v", p.id, ms[i])
 				p.nt.send(ms[i])
 			}
 		}
@@ -91,6 +93,7 @@ func (p *proposer) prepare() []message {
 	ms := make([]message, p.majority())
 	i := 0
 
+	// send Prepare to acceptors
 	for to := range p.acceptors {
 		ms[i] = message{from: p.id, to: to, typ: Prepare, n: p.n()}
 		i++
@@ -104,8 +107,12 @@ func (p *proposer) prepare() []message {
 func (p *proposer) receivePromise(promise message) {
 	prevPromise := p.acceptors[promise.from]
 
+	log.Printf("proposer: %d prevPromise %+v", p.id, prevPromise)
+
 	if prevPromise.number() < promise.number() {
 		log.Printf("proposer: %d received a new promise %+v", p.id, promise)
+		log.Printf("proposer: %d current proposer is %+v", p.id, p)
+		//save promise
 		p.acceptors[promise.from] = promise
 
 		//update value to the value with a larger N
@@ -124,6 +131,7 @@ func (p *proposer) majority() int {
 //
 func (p *proposer) majorityReached() bool {
 	m := 0
+	fmt.Println("wait ---------")
 	for _, promise := range p.acceptors {
 		log.Printf("promise number : %+v, p.n: %+v \n", promise.number(), p.n())
 		if promise.number() == p.n() {
@@ -136,6 +144,7 @@ func (p *proposer) majorityReached() bool {
 	return false
 }
 
+//proposer's number
 func (p *proposer) n() int {
 	return p.lastSeq<<16 | p.id
 }

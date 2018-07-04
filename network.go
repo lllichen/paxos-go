@@ -29,7 +29,7 @@ func (pn *paxosNetwork) agentNetwork(id int) *agentNetwork {
 }
 
 func (pn *paxosNetwork) send(m message) {
-	log.Printf("network: send %+v", m)
+	// log.Printf("network: send %+v", m)
 	pn.recvQueues[m.to] <- m
 }
 
@@ -45,7 +45,7 @@ func (pn *paxosNetwork) empty() bool {
 func (pn *paxosNetwork) recvFrom(from int, timeout time.Duration) (message, bool) {
 	select {
 	case m := <-pn.recvQueues[from]:
-		log.Printf("network: revc %+v", m)
+		// log.Printf("network: revc %+v", m)
 		return m, true
 	case <-time.After(timeout):
 		return message{}, false

@@ -62,6 +62,8 @@ func (l *learner) chosen() (accept, bool) {
 	counts := make(map[int]int)
 	accepteds := make(map[int]accept)
 
+	log.Printf("learner: %d current is %+v", l.id, l)
+
 	for _, accepted := range l.acceptors {
 		if accepted.proposalNumber() != 0 {
 			counts[accepted.proposalNumber()]++
