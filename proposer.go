@@ -26,7 +26,7 @@ func newProposer(id int, value string, nt network, acceptors ...int) *proposer {
 	return p
 }
 
-func (p *proposer) run() {
+func (p *proposer) run(value string) {
 	var ok bool
 	var m message
 
@@ -36,6 +36,9 @@ func (p *proposer) run() {
 			ms := p.prepare()
 			for i := range ms {
 				log.Printf("proposer: %d send proposer %+v", p.id, ms[i])
+				if len(value) > 0 {
+					ms[i].value = value
+				}
 				p.nt.send(ms[i])
 			}
 		}
