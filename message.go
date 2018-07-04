@@ -17,9 +17,10 @@ const (
 type message struct {
 	from, to int
 	typ      msgType
-	n        int
-	prevn    int
-	value    string
+	// message number
+	n     int
+	prevn int
+	value string
 }
 
 func (m message) number() int {
